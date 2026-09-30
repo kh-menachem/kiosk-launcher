@@ -1,0 +1,25 @@
+# Build output
+build/
+.gradle/
+*.apk
+
+# Machine-specific
+local.properties
+
+# Provisioning payloads carry the Wi-Fi password in plain text when one is
+# supplied, and the QR image encodes it just as readably.
+tools/*.json
+tools/*.properties
+tools/*.png
+tools/serve/
+
+# ...but the templates carry no secrets and are the documentation
+!tools/config.example.json
+!tools/serve/apps.example.json
+
+# The library AAR is a build artifact of the other project
+app/libs/*.aar
+
+# IDE
+.idea/
+*.iml

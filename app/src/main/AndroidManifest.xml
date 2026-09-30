@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  The kiosk library brings its own admin receiver, provisioning activities,
+  keep-alive service and boot receiver, and the manifest merger folds them in.
+  Nothing of that is repeated here.
+
+  QUERY_ALL_PACKAGES is needed because this is a launcher: it has to list every
+  installed app so somebody can choose from them. Android 11 hides the package
+  list from ordinary apps, and a launcher that cannot see the apps has nothing
+  to show.
+-->
+<manifest xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <uses-permission android:name="android.permission.QUERY_ALL_PACKAGES"
+        tools:ignore="QueryAllPackagesPermission"
+        xmlns:tools="http://schemas.android.com/tools" />
+
+    <!-- Android will not let an app list Wi-Fi networks without location.
+         The device owner grants it to itself below, so nobody is prompted. -->
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+
+    <!-- Fetching the app manifest and the APKs it lists. -->
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+
+    <application
+        android:label="Launcher"
+        android:icon="@android:drawable/ic_menu_sort_by_size"
+        android:theme="@android:style/Theme.Material.NoActionBar">
+
+        <activity
+            android:name="com.mk.launcher.LauncherActivity"
+            android:exported="true"
+            android:launchMode="singleTask"
+            android:stateNotNeeded="true"
+            android:excludeFromRecents="true"
+            android:screenOrientation="unspecified"
+            android:configChanges="keyboardHidden|orientation|screenSize|screenLayout">
+
+            <!-- the ordinary launcher entry -->
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+
+            <!--
+              This is what makes it a home screen. HOME_SCREEN tells newer
+              Android it is a launcher rather than merely something that can
+              handle Home, which matters for the Home button inside lock task.
+            -->
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.HOME" />
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+
+        <!-- Where a silent install reports back. Not exported: only the
+             package installer sends to it, through a PendingIntent. -->
+        <receiver
+            android:name="com.mk.launcher.InstallResultReceiver"
+            android:exported="false" />
+
+        <activity
+            android:name="com.mk.launcher.AppPickerActivity"
+            android:exported="false"
+            android:label="Choose apps"
+            android:windowSoftInputMode="adjustResize" />
+
+        <activity
+            android:name="com.mk.launcher.WifiActivity"
+            android:exported="false"
+            android:label="Wi-Fi" />
+
+        <activity
+            android:name="com.mk.launcher.SettingsActivity"
+            android:exported="false"
+            android:label="Launcher settings" />
+
+    </application>
+</manifest>

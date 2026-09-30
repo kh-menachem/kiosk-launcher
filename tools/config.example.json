@@ -1,0 +1,12 @@
+{
+  "apps": [
+    "com.example.first",
+    "com.example.second"
+  ],
+  "hideOthers": true,
+  "allowBrowser": true,
+  "keepAwake": false,
+  "showStatus": true,
+  "masterPassword": "change-me-or-delete-this-line",
+  "appManifestUrl": "http://YOUR-MACHINE-IP:8000/apps.json"
+}

@@ -1,0 +1,14 @@
+{
+  "com.example.first": {
+    "versionCode": 42,
+    "url": "http://YOUR-MACHINE-IP:8000/first.apk"
+  },
+  "com.example.second": {
+    "versionCode": 7,
+    "url": "http://YOUR-MACHINE-IP:8000/second.apk",
+    "splits": [
+      "http://YOUR-MACHINE-IP:8000/second.config.arm64_v8a.apk",
+      "http://YOUR-MACHINE-IP:8000/second.config.xxhdpi.apk"
+    ]
+  }
+}
